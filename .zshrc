@@ -12,8 +12,12 @@ source "$HOME/antigen."zsh
 antigen init ~/cfg/antigenrc
 
 # Load Aliases
-if [ -f ~/.aliases ]; then
-    . ~/.aliases
+if [ -f ~/cfg/aliases.sh ]; then
+    . ~/cfg/aliases.sh
+fi
+# Load Functions
+if [ -f ~/cfg/functions.sh ]; then
+    . ~/cfg/functions.sh
 fi
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
@@ -22,3 +26,21 @@ fi
 
 # Load Fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+
+# dotfiles aliases
+alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles.git/ --work-tree=$HOME'
+
+dot() {
+    if [[ "$#" -eq 0 ]]; then
+        (
+            cd /
+            for i in $(dotfiles ls-files); do
+                echo -n "$(dotfiles -c color.status=always status "$i" -s | sed "s#$i##")"
+                echo -e "¬/$i¬\e[0;33m$(dotfiles -c color.ui=always log -1 --format="%s" -- "$i")\e[0m"
+            done
+        ) | column -t --separator=¬ -T2
+    else
+        dotfiles "$@"
+    fi
+}
