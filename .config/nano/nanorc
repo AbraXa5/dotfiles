@@ -1,0 +1,25 @@
+# show line numbers
+#set constantshow
+set linenumbers
+
+# wrap lines
+set softwrap
+include /usr/share/nano/xml.nanorc
+include /usr/share/nano/go.nanorc
+include /usr/share/nano/ocaml.nanorc
+include /usr/share/nano/texinfo.nanorc
+include /usr/share/nano/perl.nanorc
+include /usr/share/nano/markdown.nanorc
+include /usr/share/nano/sh.nanorc
+include /usr/share/nano/python.nanorc
+include /usr/share/nano/c.nanorc
+include /usr/share/nano/html.nanorc
+include /usr/share/nano/java.nanorc
+include /usr/share/nano/php.nanorc
+include /usr/share/nano/yaml.nanorc
+include /usr/share/nano/json.nanorc
+include /usr/share/nano/css.nanorc
+include /usr/share/nano/sql.nanorc
+include /usr/share/nano/awk.nanorc
+include /usr/share/nano/javascript.nanorc
+include /usr/share/nano/default.nanorc
