@@ -1,0 +1,29 @@
+[filter "lfs"]
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+[user]
+	name = Abraxas
+	email = abr4xa5@protonmail.ch
+[fetch]
+	prune = true
+[alias]
+	clean-merged = "!f() { git branch --merged ${1:-develop} | egrep -v \"(^\\*|develop|dev|release|master|${1:-develop})\" | xargs git branch -d; };f"
+	clean-everything = "!f() { git branch | egrep -v \"(^\\*|develop|dev|release|master|${1:-main})\" | xargs git branch -D; };f"
+	clean-theirs = "!f() { git branch | egrep -v \"(^\\*|develop|dev|release|master|abraxas|1:-main})\" | xargs git branch -D; };f"
+	new = checkout -b
+	co = checkout
+	alias = config --get-regexp ^alias\\.
+	po = push origin HEAD
+	pof = push origin HEAD --force-with-lease
+	lg = "!f() { git log --abbrev-commit --pretty=format:'%C(yellow)%h %C(reset)%C(dim blue)%<(8,trunc)%an %C(green)(%cr) %C(dim white)- %C(reset)%s%C(bold cyan)%d%C(reset)'; };f"
+	update-branch = "pull origin develop --rebase"
+	WIP = "commit -m 'WIP'"
+	rename = "branch -m"
+[init]
+	defaultBranch = main
+[core]
+	protectNTFS = false
+[credential]
+	helper = store
