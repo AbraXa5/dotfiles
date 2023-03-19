@@ -5,12 +5,15 @@
 ### Using a script
 
 Run `cfg/setupDotfiles.sh`
+```bash
+curl https://raw.githubusercontent.com/AbraXa5/dotfiles/main/cfg/setupDotfiles.sh | bash
+```
 
 ### Manual
 
 Clone the bare repository
 ```bash
-git clone --bare git@github.com:AbraXa5/.dotfiles.git $HOME/.dotfiles.git
+git clone --bare git@github.com:AbraXa5/dotfiles $HOME/.dotfiles.git
 ```
 
 Setup an alias to use the bare repository
