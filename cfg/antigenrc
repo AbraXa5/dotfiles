@@ -1,0 +1,25 @@
+# Load oh-my-zsh library
+antigen use oh-my-zsh
+
+# Load bundles from the default repo (oh-my-zsh)
+antigen bundle git
+antigen bundle command-not-found
+antigen bundle docker
+antigen bundle sudo
+antigen bundle dirhistory
+
+# Load bundles from external repos
+antigen bundle zsh-users/zsh-completions
+antigen bundle zsh-users/zsh-autosuggestions
+antigen bundle zsh-users/zsh-syntax-highlighting
+antigen bundle agkozak/zsh-z
+#antigen bundle "MichaelAquilina/zsh-autoswitch-virtualenv"
+#antigen bundle arialdomartini/oh-my-git
+
+# Select theme
+#antigen theme robbyrussell
+antigen theme romkatv/powerlevel10k
+#antigen theme spaceship-prompt/spaceship-prompt
+
+# Commit Antigen Configuration
+antigen apply
