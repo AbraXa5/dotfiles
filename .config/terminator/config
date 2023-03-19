@@ -1,0 +1,283 @@
+[global_config]
+  scroll_tabbar = True
+  enabled_plugins = ActivityWatch, InactivityWatch, TerminalShot, Logger, RunCmdOnMatchMenu, TerminatorThemes
+  suppress_multiple_term_dialog = True
+  case_sensitive = False
+[keybindings]
+  hide_window = <Alt>grave
+  broadcast_off = <Primary>g
+  broadcast_group = <Alt>g
+[profiles]
+  [[default]]
+    background_darkness = 0.95
+    background_type = transparent
+    font = MesloLGS NF 13
+    scrollback_infinite = True
+    palette = "#1f2229:#d41919:#5ebdab:#fea44c:#367bf0:#9755b3:#49aee6:#e6e6e6:#198388:#ec0101:#47d4b9:#ff8a18:#277fff:#962ac3:#05a1f7:#ffffff"
+    use_system_font = False
+    use_theme_colors = True
+  [[Atom]]
+    background_color = "#161719"
+    background_darkness = 0.95
+    background_type = transparent
+    font = MesloLGS NF 13
+    foreground_color = "#c5c8c6"
+    scrollback_infinite = True
+    palette = "#000000:#fd5ff1:#87c38a:#ffd7b1:#85befd:#b9b6fc:#85befd:#e0e0e0:#000000:#fd5ff1:#94fa36:#f5ffa8:#96cbfe:#b9b6fc:#85befd:#e0e0e0"
+    use_system_font = False
+    use_theme_colors = True
+  [[Cobalt Neon]]
+    background_color = "#232537"
+    background_darkness = 0.95
+    background_type = transparent
+    font = MesloLGS NF 13
+    foreground_color = "#ecf0fe"
+    scrollback_infinite = True
+    palette = "#03073c:#c6004a:#acf157:#fecd5e:#525fb8:#986f82:#968763:#ecf0fc:#6c5b30:#da4b8a:#dbffa9:#fee6a9:#b2befa:#fda5cd:#a5bd86:#f6ffec"
+    use_system_font = False
+    use_theme_colors = True
+  [[VibrantInk]]
+    background_darkness = 0.95
+    background_type = transparent
+    font = MesloLGS NF 13
+    foreground_color = "#ffffff"
+    scrollback_infinite = True
+    palette = "#878787:#ff6600:#ccff04:#ffcc00:#44b4cc:#9933cc:#44b4cc:#f5f5f5:#555555:#ff0000:#00ff00:#ffff00:#0000ff:#ff00ff:#00ffff:#e5e5e5"
+    use_system_font = False
+    use_theme_colors = True
+  [[FishTank]]
+    font = MesloLGS NF 13
+    foreground_color = "#ffffff"
+    use_system_font = False
+  [[Nebula]]
+    background_color = "#1a1a1a"
+    background_darkness = 0.95
+    background_type = transparent
+    foreground_color = "#c4c5b5"
+    scrollback_infinite = True
+    palette = "#1a1a1a:#f4005f:#98e024:#fa8419:#9d65ff:#f4005f:#58d1eb:#c4c5b5:#625e4c:#f4005f:#98e024:#e0d561:#9d65ff:#f4005f:#58d1eb:#f6f6ef"
+    use_theme_colors = True
+  [[Monokai Soda]]
+    font = MesloLGS NF 13
+    use_system_font = False
+    copy_on_selection = True
+[layouts]
+  [[default]]
+    [[[child0]]]
+      type = Window
+      parent = ""
+      order = 0
+      position = 736:117
+      maximised = False
+      fullscreen = False
+      size = 1172, 662
+      title = kali@kali: ~
+      last_active_term = ba8b353b-ae66-4b0f-b5d4-ed14210e1162
+      last_active_window = True
+    [[[terminal1]]]
+      type = Terminal
+      parent = child0
+      order = 0
+      profile = default
+      uuid = ba8b353b-ae66-4b0f-b5d4-ed14210e1162
+  [[CTF_bash]]
+    [[[child0]]]
+      type = Window
+      parent = ""
+      order = 0
+      position = 0:43
+      maximised = True
+      fullscreen = False
+      size = 1908, 859
+      title = kali@kali: ~
+      last_active_window = True
+    [[[child1]]]
+      type = Notebook
+      parent = child0
+      order = 0
+      labels = None, None, None, None, None
+      last_active_term = 31cbe985-0c1a-483e-86f7-a54f6cd55692, 2b6bfa46-f698-436e-8924-7215a04ac872, 594c19de-36d5-4b4e-8934-c29228977265, ed4017c8-b24e-435b-b025-7676acccaf97, bfc99e0f-459c-427c-9d34-866cb8eb08a0
+      active_page = 0
+    [[[terminal2]]]
+      type = Terminal
+      parent = child1
+      order = 0
+      profile = default
+      uuid = 31cbe985-0c1a-483e-86f7-a54f6cd55692
+      directory = bash
+    [[[terminal3]]]
+      type = Terminal
+      parent = child1
+      order = 1
+      group = Phi
+      profile = Monokai Soda
+      uuid = 2b6bfa46-f698-436e-8924-7215a04ac872
+      directory = bash
+    [[[child4]]]
+      type = VPaned
+      parent = child1
+      order = 2
+      position = 406
+      ratio = 0.4993849938499385
+    [[[terminal5]]]
+      type = Terminal
+      parent = child4
+      order = 0
+      group = Phi
+      profile = Atom
+      uuid = 5202a5ec-f520-4057-b004-5fbfc03f9a07
+      directory = bash
+    [[[terminal6]]]
+      type = Terminal
+      parent = child4
+      order = 1
+      group = Phi
+      profile = Nebula
+      uuid = 594c19de-36d5-4b4e-8934-c29228977265
+      directory = bash
+    [[[child7]]]
+      type = HPaned
+      parent = child1
+      order = 3
+      position = 950
+      ratio = 0.4997369805365597
+    [[[terminal8]]]
+      type = Terminal
+      parent = child7
+      order = 0
+      group = Phi
+      profile = Nebula
+      uuid = ee836cc7-4eb7-4f13-948c-39f48a4b55f1
+      directory = bash
+    [[[child9]]]
+      type = VPaned
+      parent = child7
+      order = 1
+      position = 406
+      ratio = 0.4993849938499385
+    [[[terminal10]]]
+      type = Terminal
+      parent = child9
+      order = 0
+      group = Phi
+      profile = FishTank
+      uuid = ed4017c8-b24e-435b-b025-7676acccaf97
+      directory = bash
+    [[[terminal11]]]
+      type = Terminal
+      parent = child9
+      order = 1
+      group = Phi
+      profile = default
+      uuid = 6ed995ab-2a6b-42b1-bbe7-8692aab1684e
+      command = ""
+      directory = bash
+    [[[terminal12]]]
+      type = Terminal
+      parent = child1
+      order = 4
+      profile = VibrantInk
+      uuid = bfc99e0f-459c-427c-9d34-866cb8eb08a0
+      command = bash
+  [[CTF]]
+    [[[child0]]]
+      type = Window
+      parent = ""
+      order = 0
+      position = 0:43
+      maximised = True
+      fullscreen = False
+      size = 1908, 889
+      title = kali@kali: ~
+      last_active_window = True
+    [[[child1]]]
+      type = Notebook
+      parent = child0
+      order = 0
+      labels = None, None, None, None, None
+      last_active_term = 31cbe985-0c1a-483e-86f7-a54f6cd55692, 2b6bfa46-f698-436e-8924-7215a04ac872, 594c19de-36d5-4b4e-8934-c29228977265, 6ed995ab-2a6b-42b1-bbe7-8692aab1684e, bfc99e0f-459c-427c-9d34-866cb8eb08a0
+      active_page = 0
+    [[[terminal2]]]
+      type = Terminal
+      parent = child1
+      order = 0
+      profile = default
+      uuid = 31cbe985-0c1a-483e-86f7-a54f6cd55692
+    [[[terminal3]]]
+      type = Terminal
+      parent = child1
+      order = 1
+      group = Phi
+      profile = VibrantInk
+      uuid = 2b6bfa46-f698-436e-8924-7215a04ac872
+    [[[child4]]]
+      type = VPaned
+      parent = child1
+      order = 2
+      position = 421
+      ratio = 0.49940688018979834
+    [[[terminal5]]]
+      type = Terminal
+      parent = child4
+      order = 0
+      group = Phi
+      profile = Nebula
+      uuid = 5202a5ec-f520-4057-b004-5fbfc03f9a07
+    [[[terminal6]]]
+      type = Terminal
+      parent = child4
+      order = 1
+      group = Phi
+      profile = Nebula
+      uuid = 594c19de-36d5-4b4e-8934-c29228977265
+    [[[child7]]]
+      type = HPaned
+      parent = child1
+      order = 3
+      position = 950
+      ratio = 0.4997369805365597
+    [[[terminal8]]]
+      type = Terminal
+      parent = child7
+      order = 0
+      group = Phi
+      profile = Nebula
+      uuid = ee836cc7-4eb7-4f13-948c-39f48a4b55f1
+    [[[child9]]]
+      type = VPaned
+      parent = child7
+      order = 1
+      position = 421
+      ratio = 0.49940688018979834
+    [[[terminal10]]]
+      type = Terminal
+      parent = child9
+      order = 0
+      group = Phi
+      profile = FishTank
+      uuid = ed4017c8-b24e-435b-b025-7676acccaf97
+    [[[terminal11]]]
+      type = Terminal
+      parent = child9
+      order = 1
+      group = Phi
+      profile = default
+      uuid = 6ed995ab-2a6b-42b1-bbe7-8692aab1684e
+    [[[terminal12]]]
+      type = Terminal
+      parent = child1
+      order = 4
+      profile = VibrantInk
+      uuid = bfc99e0f-459c-427c-9d34-866cb8eb08a0
+[plugins]
+  [[CustomCommandsMenu]]
+    [[[Start HTB vpn]]]
+      enabled = False
+      name = Start HTB vpn
+      command = sudo openvpn $HOME/vpn_configs/lab_Abr4Xa5.ovpn
+      position = 0
+    [[[Start THM vpn]]]
+      enabled = False
+      name = Start THM vpn
+      command = sudo openvpn $HOME/vpn_configs/thm_Abr4Xa5.ovpn
+      position = 1
