@@ -48,7 +48,7 @@ alias untar='tar -zxvf '
 
 alias myalias='nano ~/.aliases'
 alias sublmyalias='subl ~/.aliases'
-alias src='source ~/.zshrc'
+# alias src='source ~/.zshrc'
 
 alias c='clear'
 

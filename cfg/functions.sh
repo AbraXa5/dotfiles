@@ -5,6 +5,12 @@ function killp_named() {
     ps aux | grep "$processName" | grep -v grep | grep -v kill_named | awk '{print $2}' | xargs kill -9
 }
 
+function src() {
+    source ~/.zshrc
+    cowsay $(fortune) | toilet -f term --metal && sleep 5 && clear
+    eval zsh
+}
+
 function tre() {
     tree -aC -I '.git|node_modules|bower_components' --dirsfirst "$@" | less -FRNX
 }
@@ -53,6 +59,15 @@ function python_server() {
     echo -e "[\e[96m$(pwd)\e[0m]\e[34m" && echo -en "\e[0m"
     echo "Files" && ls
     python3 -m http.server 80
+}
+
+# Create a data URL from a file
+function dataurl() {
+    local mimeType=$(file -b --mime-type "$1");
+    if [[ $mimeType == text/* ]]; then
+        mimeType="${mimeType};charset=utf-8";
+    fi
+    echo "data:${mimeType};base64,$(openssl base64 -in "$1" | tr -d '\n')";
 }
 
 setip() {
