@@ -6,7 +6,7 @@ function dotfiles {
    git --git-dir=$HOME/.dotfiles.git/ --work-tree=$HOME $@  
 }
 # create a directory to backup existing dotfiles to  
-mkdir -p .dotfiles-backup  
+mkdir -p .dotfiles-backup/.ssh .dotfiles-backup/cfg 
 dotfiles checkout  
 if [ $? = 0 ]; then  
    echo "Checked out dotfiles from git@github.com:AbraXa5/.dotfiles";
