@@ -27,7 +27,25 @@ fi
 # Load Fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+# Load Exports
+if [ -f ~/cfg/exports.sh ]; then
+    . ~/cfg/exports.sh
+fi
 
+# Source NVM zsh integration
+if [[ -d "$NVM_DIR" && -f ~/cfg/nvmrc ]]; then
+    . ~/cfg/nvmrc
+fi
+
+# Source cargo
+if [[ -f ~"~/.cargo/env" ]]; then
+    . "$HOME/.cargo/env"
+fi
+
+# Source any local configs/ Tokens
+if [[ -f ~"~/cfg/extrass.local" ]]; then
+    . ~/cfg/extras.local
+fi
 # dotfiles aliases
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles.git/ --work-tree=$HOME'
 
