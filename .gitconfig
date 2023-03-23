@@ -1,29 +1,73 @@
 [filter "lfs"]
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true
-	clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+    required = true
+    clean = git-lfs clean -- %f
 [user]
-	name = Abraxas
-	email = abr4xa5@protonmail.ch
+    name = Abraxas
+    email = abr4xa5@protonmail.ch
 [fetch]
-	prune = true
+    prune = true
 [alias]
-	clean-merged = "!f() { git branch --merged ${1:-develop} | egrep -v \"(^\\*|develop|dev|release|master|${1:-develop})\" | xargs git branch -d; };f"
-	clean-everything = "!f() { git branch | egrep -v \"(^\\*|develop|dev|release|master|${1:-main})\" | xargs git branch -D; };f"
-	clean-theirs = "!f() { git branch | egrep -v \"(^\\*|develop|dev|release|master|abraxas|1:-main})\" | xargs git branch -D; };f"
-	new = checkout -b
-	co = checkout
-	alias = config --get-regexp ^alias\\.
-	po = push origin HEAD
-	pof = push origin HEAD --force-with-lease
-	lg = "!f() { git log --abbrev-commit --pretty=format:'%C(yellow)%h %C(reset)%C(dim blue)%<(8,trunc)%an %C(green)(%cr) %C(dim white)- %C(reset)%s%C(bold cyan)%d%C(reset)'; };f"
-	update-branch = "pull origin develop --rebase"
-	WIP = "commit -m 'WIP'"
-	rename = "branch -m"
+    alias = config --get-regexp ^alias\\.
+    clean-merged = "!f() { git branch --merged ${1:-develop} | egrep -v \"(^\\*|develop|dev|release|master|${1:-develop})\" | xargs git branch -d; };f"
+    clean-everything = "!f() { git branch | egrep -v \"(^\\*|develop|dev|release|master|${1:-main})\" | xargs git branch -D; };f"
+    clean-theirs = "!f() { git branch | egrep -v \"(^\\*|develop|dev|release|master|abraxas|${1:-main})\" | xargs git branch -D; };f"
+    lg = "!f() { git log --abbrev-commit --pretty=format:'%C(yellow)%h %C(reset)%C(dim blue)%<(8,trunc)%an %C(green)(%cr) %C(dim white)- %C(reset)%s%C(bold cyan)%d%C(reset)'; };f"
+    co = checkout
+    new = checkout -b
+    rename = "branch -m"
+    po = push origin HEAD
+    pof = push origin HEAD --force-with-lease
+    update-branch = "pull origin develop --rebase"
+    save = "!git add -A && git commit -m 'Save' --no-verify"
+    WIP = "commit -m 'WIP'"
+    oops = commit --amend --no-edit
+    cm = commit -m
+    pullrb = pull --rebase
+    undocommit = reset --soft HEAD^
+    cleanall = reset --hard
+    se = '!git rev-list --all | xargs git grep -F'
+    st = status --short
+    whats-new = !sh -c 'git log $1@{1}..$1@{0} "$@"'
+    squash = !"squash() { git rebase -i HEAD~$1; }; squash"
+    cfg = config --global -e
+    filehistory = log -p --follow
+    git = !exec git
+
+[grep]
+    lineNumber = true
+
+[push]
+    default = current
+    followTags = true
+    autoSetupRemote = true
+[pull]
+    ff = only
+    default = current
+[checkout]
+    defaultRemote = origin
+
+[url "git@github.com:"]
+    insteadOf = "gh:"
+    pushInsteadOf = "github:"
+    pushInsteadOf = "git://github.com/"
+[url "git://github.com/"]
+    insteadOf = "github:"
+[url "git@gist.github.com:"]
+    insteadOf = "gst:"
+    pushInsteadOf = "gist:"
+    pushInsteadOf = "git://gist.github.com/"
+[url "git://gist.github.com/"]
+    insteadOf = "gist:"
+
 [init]
-	defaultBranch = main
+    defaultBranch = main
 [core]
-	protectNTFS = false
+    protectNTFS = false
 [credential]
-	helper = store
+    helper = store
+
+# Local file for github tokens/ secrets / etc
+[include]
+    path = ~/cfg/gitconfig.local
