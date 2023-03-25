@@ -32,6 +32,9 @@ if [ -f ~/cfg/exports.sh ]; then
     . ~/cfg/exports.sh
 fi
 
+# Load nvm
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+
 # Source NVM zsh integration
 if [[ -d "$NVM_DIR" && -f ~/cfg/nvmrc ]]; then
     . ~/cfg/nvmrc
