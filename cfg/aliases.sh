@@ -113,6 +113,7 @@ alias grepjs='grep_js_files'
 
 
 alias bat='batcat'
+alias cat='bat -Pp'
 alias xc='xclip -sel clip'
 
 # cracking zip files with rockyou.txt
