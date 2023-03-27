@@ -75,7 +75,7 @@ setip() {
 }
 
 newnote() {
-    cp ~/.templates/notes_template.md ./notes.md
+    cp ~/cfg/templates/notes_template.md ./notes.md
     subl notes.md
 }
 #-----------
@@ -83,18 +83,18 @@ newnote() {
 
 ## create bash boilerplate code
 newBash() {
-    cp ~/.templates/bash_template.sh "./${1}"
+    cp ~/cfg/templates/bash_template.sh "./${1}"
     subl "${1}"
 }
 
 ## create python request boilerplate code
 newPython_request() {
-    cp ~/.templates/pythonRequests_template.py "./${1}"
+    cp ~/cfg/templates/pythonRequests_template.py "./${1}"
     subl "${1}"
 }
 ## create python database command boilerplate code
 newPython_db() {
-    cp ~/.templates/pythonDbCommands_template.py "./${1}"
+    cp ~/cfg/templates/pythonDbCommands_template.py "./${1}"
     subl "${1}"
 }
 
