@@ -25,7 +25,7 @@ fi
 [[ ! -f ~/cfg/.p10k.zsh ]] || source ~/cfg/.p10k.zsh
 
 # Load Fzf
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -f ~/cfg/fzf.zsh ] && source ~/cfg/fzf.zsh
 
 # Load Exports
 if [ -f ~/cfg/exports.sh ]; then
