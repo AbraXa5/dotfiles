@@ -135,15 +135,6 @@ alias ll='ls -l'
 alias la='ls -A'
 alias l='ls -CF'
 
-# Alias definitions.
-# You may want to put all your additions into a separate file like
-# ~/.bash_aliases, instead of adding them here directly.
-# See /usr/share/doc/bash-doc/examples in the bash-doc package.
-
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
-fi
-
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
@@ -155,4 +146,37 @@ if ! shopt -oq posix; then
   fi
 fi
 
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+# Load Aliases
+if [ -f ~/cfg/aliases.sh ]; then
+    . ~/cfg/aliases.sh
+fi
+# Load Functions
+if [ -f ~/cfg/functions.sh ]; then
+    . ~/cfg/functions.sh
+fi
+
+# Load Fzf
+[ -f ~/cfg/fzf.zsh ] && source ~/cfg/fzf.zsh
+
+# Load Exports
+if [ -f ~/cfg/exports.sh ]; then
+    . ~/cfg/exports.sh
+fi
+
+# Load nvm
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+
+# Source NVM zsh integration
+if [[ -d "$NVM_DIR" && -f ~/cfg/nvmrc ]]; then
+    . ~/cfg/nvmrc
+fi
+
+# Source cargo
+if [[ -f ~"~/.cargo/env" ]]; then
+    . "$HOME/.cargo/env"
+fi
+
+# Source any local configs/ Tokens
+if [[ -f ~"~/cfg/extrass.local" ]]; then
+    . ~/cfg/extras.local
+fi
