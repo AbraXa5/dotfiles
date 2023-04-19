@@ -19,18 +19,6 @@ function historygrep() {
     history | grep "$1" | tr -s ' ' | cut -d' ' -f5-
 }
 
-function cheat() {
-    if [[ "$1" == '-p' ]]; then
-        # -p for a pager option
-        topic="$2"
-        curl -s cheat.sh/"$topic" | bat -p -
-    else
-        topic="$2"
-        curl -s cheat.sh/"$topic"
-    fi
-
-}
-
 #change directory and list content
 function cl() {
     DIRECTORY="$*"

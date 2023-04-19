@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+print_usage() {
+    echo "Usage: $0 command [options]"
+    echo "- cheat language/query+to+search"
+    echo "- cheat language/query+to+search/2 -> New answer"
+    echo "- Additional Options"
+    echo "  - cheat language/:help"
+    echo "  - cheat language/:list -> List all cheatsheets"
+    echo "  - cheat language/:learn -> Learn a language"
+}
+
+if [ $# -eq 0 ]; then
+    print_usage
+    exit 1
+fi
+
+if [[ "$1" == '-p' ]]; then
+    # -p for a pager option
+    topic="$2"
+    curl -s cheat.sh/"$topic" | bat -p -
+else
+    topic="$1"
+    curl -s cheat.sh/"$topic"
+fi
