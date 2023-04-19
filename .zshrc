@@ -6,49 +6,48 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 # Load Antigen
-source "$HOME/antigen."zsh
+source "$HOME/antigen.zsh"
 
 # Load Antigen configurations
 antigen init ~/cfg/antigenrc
 
+# function to source if the file exists and is readable
+source_if_exists() {
+    [[ -r "$1" ]] && source "$1";
+}
+
 # Load Aliases
-if [ -f ~/cfg/aliases.sh ]; then
-    . ~/cfg/aliases.sh
-fi
+source_if_exists "$HOME/cfg/aliases.sh"
+
 # Load Functions
-if [ -f ~/cfg/functions.sh ]; then
-    . ~/cfg/functions.sh
-fi
+source_if_exists "$HOME/cfg/functions.sh"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 # Load P10K
-[[ ! -f ~/cfg/.p10k.zsh ]] || source ~/cfg/.p10k.zsh
+source_if_exists "$HOME/cfg/.p10k.zsh"
 
 # Load Fzf
-[ -f ~/cfg/fzf.zsh ] && source ~/cfg/fzf.zsh
+source_if_exists "$HOME/cfg/fzf.zsh"
 
 # Load Exports
-if [ -f ~/cfg/exports.sh ]; then
-    . ~/cfg/exports.sh
-fi
+source_if_exists "$HOME/cfg/exports.sh"
 
 # Load nvm
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # Why was the dot escaped
+source_if_exists "$NVM_DIR/nvm.sh"
 
+# TODO: Update source_if_exists for multiple entires
 # Source NVM zsh integration
 if [[ -d "$NVM_DIR" && -f ~/cfg/nvmrc ]]; then
     . ~/cfg/nvmrc
 fi
 
 # Source cargo
-if [[ -f ~"~/.cargo/env" ]]; then
-    . "$HOME/.cargo/env"
-fi
+source_if_exists "$HOME/.cargo/env"
 
 # Source any local configs/ Tokens
-if [[ -f ~"~/cfg/extrass.local" ]]; then
-    . ~/cfg/extras.local
-fi
+source_if_exists "$HOME/cfg/extras.local"
+
 # dotfiles aliases
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles.git/ --work-tree=$HOME'
 
