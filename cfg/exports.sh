@@ -72,7 +72,9 @@ export FZF_DEFAULT_OPTS="$fzf_colors \
 --reverse \
 --prompt '∷ ' \
 --pointer ▶ \
---marker ⇒
+--marker ⇒ \
+--height '70%' \
+--preview-window=,65% \
 "
 
 export BAT_THEME='gruvbox-dark'
