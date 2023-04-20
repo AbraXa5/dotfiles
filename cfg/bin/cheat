@@ -1,25 +1,62 @@
 #!/usr/bin/env bash
 
 print_usage() {
-    echo "Usage: $0 command [options]"
-    echo "- cheat language/query+to+search"
-    echo "- cheat language/query+to+search/2 -> New answer"
-    echo "- Additional Options"
-    echo "  - cheat language/:help"
-    echo "  - cheat language/:list -> List all cheatsheets"
-    echo "  - cheat language/:learn -> Learn a language"
+  cat <<-ENDUSAGE
+    Usage: $0 command [options]
+
+    Commands:
+      cheat language/query+to+search
+      cheat language/query+to+search/2 → New answer
+
+    Additional Options:
+      -h                Display usage
+      -p                Add pager list option to the cheatsheet function
+      cheat language/:help
+      cheat language/:list → List all cheatsheets
+      cheat language/:learn → Learn a language
+ENDUSAGE
 }
+
+
+
+cheatsheet() {
+    topic="$1"
+    if [[ "$2" == "pager" ]]; then
+        # FIXME: Take a while to render, seedup
+        curl -s cheat.sh/"$topic" | batcat --theme=DarkNeon --style=plain --paging=always --pager="less -RF" -
+    else
+        curl -s cheat.sh/"$topic"
+    fi
+}
+
+while getopts ":hp" opt; do
+  case ${opt} in
+    h )
+      print_usage
+      exit 0
+      ;;
+    p )
+      shift
+      cheatsheet "$1" "pager"
+      exit 0
+      ;;
+    \? )
+      echo "Invalid option: -$OPTARG" 1>&2
+      print_usage
+      exit 1
+      ;;
+    : )
+      echo "Option -$OPTARG requires an argument." 1>&2
+      print_usage
+      exit 1
+      ;;
+  esac
+done
+shift $((OPTIND -1))
 
 if [ $# -eq 0 ]; then
     print_usage
     exit 1
 fi
 
-if [[ "$1" == '-p' ]]; then
-    # -p for a pager option
-    topic="$2"
-    curl -s cheat.sh/"$topic" | bat -p -
-else
-    topic="$1"
-    curl -s cheat.sh/"$topic"
-fi
+cheatsheet "$1"
