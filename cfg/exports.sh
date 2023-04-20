@@ -32,7 +32,49 @@ export NVM_DIR="$HOME/.nvm"
 # For pipx
 export PATH="$PATH:$HOME/.local/bin"
 
-export FZF_DEFAULT_OPTS="--color=$fzf_colors --reverse"
+# TODO: Add conditonals here
+# Dark solorized
+# fzf_colors="pointer:#ebdbb2,bg+:#3c3836,fg:#ebdbb2,fg+:#fbf1c7,hl:#8ec07c,info:#928374,header:#fb4934"
+
+# Dracula themed
+# fzf_colors="bg+:#363a4f,\
+# bg:#24273a,\
+# spinner:#f4dbd6,\
+# hl:#ed8796,\
+# fg:#cad3f5,\
+# header:#ed8796,\
+# info:#c6a0f6,\
+# pointer:#f4dbd6,\
+# marker:#f4dbd6,\
+# fg+:#cad3f5,\
+# prompt:#c6a0f6,\
+# hl+:#ed8796"
+
+# Simple
+fzf_colors="
+  --color=fg:-1
+  --color=fg+:#61afef
+  --color=bg:-1
+  --color=bg+:#444957
+  --color=hl:#E06C75
+  --color=hl+:#E06C75
+  --color=gutter:-1
+  --color=pointer:#61afef
+  --color=marker:#98C379
+  --color=header:#61afef
+  --color=info:#98C379
+  --color=spinner:#61afef
+  --color=prompt:#c678dd
+  --color=border:#798294
+"
+
+export FZF_DEFAULT_OPTS="$fzf_colors \
+--reverse \
+--prompt '∷ ' \
+--pointer ▶ \
+--marker ⇒
+"
+
 export BAT_THEME='gruvbox-dark'
 export FZF_CTRL_T_OPTS="
   --preview 'bat -n --color=always {}'
