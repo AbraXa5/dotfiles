@@ -2,6 +2,15 @@
 
 ## Install
 
+Add a ssh config entry for `dotfiles.github.com`
+```bash
+Host dotfiles.github.com
+  HostName github.com
+  User git
+  IdentityFile ~/.ssh/dotfiles
+  IdentitiesOnly yes
+ ```
+
 ### Using a script
 
 Run `cfg/setupDotfiles.sh`
