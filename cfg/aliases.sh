@@ -14,6 +14,20 @@ fi
 # Enable aliases to be sudo’ed
 alias sudo='sudo '
 
+if [ -x "$(command -v batcat)" ]; then
+    alias fzp="fzf --preview 'batcat --color=always {}' --preview-window '~3'"
+else
+    alias fzp="fzf --preview 'bat --color=always {}' --preview-window '~3'"
+fi
+
+if [ -x "$(command -v batcat)" ]; then
+    alias bat='batcat'
+else
+    alias batcat='bat'
+fi
+alias cat='bat -Pp'
+alias xc='xclip -sel clip'
+
 # Intuitive map function
 # For example, to list all directories that contain a certain file:
 # find . -name .gitattributes | map dirname
@@ -29,8 +43,6 @@ alias httpdump="sudo tcpdump -i eth0 -n -s 0 -w - | grep -a -o -E \"Host\: .*|GE
 
 # Mirror stdout to stderr, useful for seeing data going through a pipe
 alias peek='tee >(cat 1>&2)'
-
-alias fzp="fzf --preview 'batcat --color=always {}' --preview-window '~3'"
 
 alias weather='curl wttr.in/'
 #-----------
@@ -110,11 +122,6 @@ alias pc='pwncat-cs'
 alias ffufdirbust='ffuf_directory_bruteforcing'
 alias wfuzzdir='wfuzz_directory_bruteforcing'
 alias grepjs='grep_js_files'
-
-
-alias bat='batcat'
-alias cat='bat -Pp'
-alias xc='xclip -sel clip'
 
 # cracking zip files with rockyou.txt
 alias crackzip='fcrackzip -v -u -D -p /usr/share/wordlists/rockyou.txt'
