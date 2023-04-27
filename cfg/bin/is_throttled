@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+function is_throttled () {
+    throttled="$(/opt/vc/bin/vcgencmd  get_throttled)"
+    
+    if [[ $throttled = "throttled=0x0" ]]; then
+        # Not Throttled
+        return 1
+    else
+        # Throttled
+        return 0
+    fi
+}
+
+# is_throttled
+if  /home/abraxas/cfg/bin/is_throttled; then
+    echo "WARNING:  You are being throttled.\nThis is likely because you are undervoltage.\nPlease connect your PI to a better power supply";
+else
+    echo "Everything is fine";
+fi
