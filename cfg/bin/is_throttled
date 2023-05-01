@@ -14,7 +14,8 @@ function is_throttled () {
 
 # is_throttled
 if  /home/abraxas/cfg/bin/is_throttled; then
-    echo "WARNING:  You are being throttled.\nThis is likely because you are undervoltage.\nPlease connect your PI to a better power supply";
+    broadcast_message= "WARNING:  You are being throttled.\nThis is likely because you are undervoltage.\nPlease connect your PI to a better power supply";
+    wall "$broadcast_message"
 else
-    echo "Everything is fine";
+    wall "Everything is fine";
 fi
