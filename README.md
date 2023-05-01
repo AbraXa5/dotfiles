@@ -39,3 +39,44 @@ Disable tracking of new files
 ```bash
 dotfiles config status.showUntrackedFiles no
 ```
+
+## Post Install 
+
+Antigen will handle all zsh requirements 
+
+Install fzf
+```bash
+git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+~/.fzf/install --no-update-rc --no-bash --no-zsh
+```
+
+Installl required tools and packages
+```bash
+yay -S \
+bat \
+exa \
+the_silver_searcher \
+xclip \
+nnn \
+peco \
+jq \
+python-pip \
+python-venv \
+unzip \
+nmap \
+ffuf \
+wfuzz \
+remmina \
+fortune-mod \
+toilet \
+cowsay \
+go
+```
+
+
+```bash
+yay -S docker
+sudo usermod -aG docker $USER
+newgrp docker
+sudo systemctl enable docker --now
+```
