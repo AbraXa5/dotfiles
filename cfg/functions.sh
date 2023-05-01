@@ -222,12 +222,12 @@ function chisel_server_start() {
     echo ''
     echo 'This will create a tunnel to `TARGET_IP:TARGET_PORT` accessible through `127.0.0.1:LOCAL_PORT`'
     echo ''
-    /home/kali/Tools/chisel/chisel_1.7.6_linux_amd64 server --reverse --port "${1}"
+    /home/$USER/Tools/chisel/chisel_1.7.6_linux_amd64 server --reverse --port "${1}"
 }
 
 # TODO Improve this
 function xnLinkFinder() {
-    cd /home/kali/Tools/xnLinkFinder || exit 1
+    cd /home/$USER/Tools/xnLinkFinder || exit 1
     pipenv run python xnLinkFinder.py "${@}"
     cd - || exit 1
     mv "$OLDPWD/output.txt" ./xnLinkFinder_output.txt
