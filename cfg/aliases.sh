@@ -185,7 +185,10 @@ alias delEmptynewline="sed '/^[[:space:]]*$/d'"
 alias urlencode='python3 -c "import sys, urllib.parse as ul;print(ul.quote(sys.argv[1]))"'
 alias urlencode+='python3 -c "import sys, urllib.parse as ul;print(ul.quote_plus(sys.argv[1]))"'
 alias urldecode='python3 -c "import sys, urllib.parse as ul;print(ul.unquote(sys.argv[1]))"'
-# TODO Add lamda to percent encode everything 
+# TODO Add lamda to percent encode everything
+
+# Get dockerized tailscale client status
+alias tailscale-status='docker exec tailscale tailscale status'
 
 # dotfiles aliases
 
