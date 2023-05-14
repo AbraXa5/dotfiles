@@ -156,7 +156,7 @@ if [ -f ~/cfg/functions.sh ]; then
 fi
 
 # Load Fzf
-[ -f ~/cfg/fzf.zsh ] && source ~/cfg/fzf.zsh
+[ -f ~/cfg/fzf.bash ] && source ~/cfg/fzf.bash
 
 # Load Exports
 if [ -f ~/cfg/exports.sh ]; then
