@@ -14,6 +14,9 @@
     clean-everything = "!f() { git branch | egrep -v \"(^\\*|develop|dev|release|master|${1:-main})\" | xargs git branch -D; };f"
     clean-theirs = "!f() { git branch | egrep -v \"(^\\*|develop|dev|release|master|abraxas|${1:-main})\" | xargs git branch -D; };f"
     lg = "!f() { git log --abbrev-commit --pretty=format:'%C(yellow)%h %C(reset)%C(dim blue)%<(8,trunc)%an %C(green)(%cr) %C(dim white)- %C(reset)%s%C(bold cyan)%d%C(reset)'; };f"
+    # lg = "!f() { git log --graph --all--pretty=tformat:'%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --decorate=full; };f"
+    gph = "!f() { git log --graph --all --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset) %C(bold cyan)(committed: %cD)%C(reset) %C(auto)%d%C(reset)%n''          %C(white)%s%C(reset)%n''          %C(dim white)- %an <%ae> %C(reset) %C(dim white)(committer: %cn <%ce>)%C(reset)'; };f"
+    tably = "!f() { bash $HOME/cfg/bin/tably-graph; };f"
     co = checkout
     new = checkout -b
     rename = "branch -m"
@@ -35,6 +38,9 @@
     filehistory = log -p --follow
     git = !exec git
 
+# for fancy git graph
+[log]
+    graphColors = bold 160, blink 231 bold 239, bold 166, bold black 214, bold green, bold 24, cyan
 [grep]
     lineNumber = true
 
