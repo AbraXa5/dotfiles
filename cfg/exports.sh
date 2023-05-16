@@ -26,7 +26,7 @@ export LESS_TERMCAP_md="${yellow}";
 export MANPAGER='less -X';
 
 export GOPATH=$HOME/go
-export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH=$GOPATH/bin:/usr/local/bin:$PATH
 export NVM_DIR="$HOME/.nvm"
 
 # For pipx
