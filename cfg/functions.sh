@@ -1,13 +1,16 @@
 #! /usr/bin/env bash
 
+gpip() {
+    PIP_REQUIRE_VIRTUALENV=false pip "$@"
+}
 function killp_named() {
     processName="$1"
     ps aux | grep "$processName" | grep -v grep | grep -v kill_named | awk '{print $2}' | xargs kill -9
 }
 
 function src() {
-    source ~/.zshrc
-    cowsay $(fortune) | toilet -f term --metal && sleep 5 && clear
+    source $HOME/.zshrc
+    cowsay "$(fortune)" | toilet -f term --metal && sleep 5 && clear
     eval zsh
 }
 
@@ -51,11 +54,11 @@ function python_server() {
 
 # Create a data URL from a file
 function dataurl() {
-    local mimeType=$(file -b --mime-type "$1");
+    local mimeType=$(file -b --mime-type "$1")
     if [[ $mimeType == text/* ]]; then
-        mimeType="${mimeType};charset=utf-8";
+        mimeType="${mimeType};charset=utf-8"
     fi
-    echo "data:${mimeType};base64,$(openssl base64 -in "$1" | tr -d '\n')";
+    echo "data:${mimeType};base64,$(openssl base64 -in "$1" | tr -d '\n')"
 }
 
 setip() {
