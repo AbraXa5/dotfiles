@@ -1,29 +1,29 @@
 #!/usr/bin/env bash
 
 # Make vim the default editor.
-export EDITOR='nano';
+export EDITOR='nano'
 
 # Increase Bash history size. Allow 32³ entries; the default is 500.
-export HISTSIZE='32768';
-export HISTFILESIZE="${HISTSIZE}";
+export HISTSIZE='32768'
+export HISTFILESIZE="${HISTSIZE}"
 # Omit duplicates and commands that begin with a space from history.
-export HISTCONTROL='ignoreboth';
+export HISTCONTROL='ignoreboth'
 
 # Enable persistent REPL history for `node`.
-export NODE_REPL_HISTORY=~/.node_history;
+export NODE_REPL_HISTORY=~/.node_history
 # Allow 32³ entries; the default is 1000.
-export NODE_REPL_HISTORY_SIZE='32768';
+export NODE_REPL_HISTORY_SIZE='32768'
 # match web browsers.
-export NODE_REPL_MODE='sloppy';
+export NODE_REPL_MODE='sloppy'
 
 # Make Python use UTF-8 encoding for output to stdin, stdout, and stderr.
-export PYTHONIOENCODING='UTF-8';
+export PYTHONIOENCODING='UTF-8'
 
 # Highlight section titles in manual pages.
-export LESS_TERMCAP_md="${yellow}";
+export LESS_TERMCAP_md="${yellow}"
 
 # Don’t clear the screen after quitting a manual page.
-export MANPAGER='less -X';
+export MANPAGER='less -X'
 
 export GOPATH=$HOME/go
 export PATH=$GOPATH/bin:/usr/local/bin:$PATH
@@ -31,6 +31,10 @@ export NVM_DIR="$HOME/.nvm"
 
 # For pipx
 export PATH="$PATH:$HOME/.local/bin"
+
+# Pyenv shell config
+export PYENV_ROOT="$HOME/.pyenv"
+command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 
 # TODO: Add conditonals here
 # Dark solorized

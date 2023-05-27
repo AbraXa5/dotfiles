@@ -22,7 +22,7 @@ source_if_exists "$HOME/cfg/aliases.sh"
 # Load Functions
 source_if_exists "$HOME/cfg/functions.sh"
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+# To customize prompt, run `p10k configure` or edit ~/cfg/.p10k.zsh.
 # Load P10K
 source_if_exists "$HOME/cfg/.p10k.zsh"
 
@@ -44,6 +44,11 @@ fi
 
 # Source cargo
 source_if_exists "$HOME/.cargo/env"
+
+# Activate pyenv
+if command -v pyenv >/dev/null; then
+  eval "$(pyenv init -)"
+fi
 
 # Source any local configs/ Tokens
 source_if_exists "$HOME/cfg/extras.local"
