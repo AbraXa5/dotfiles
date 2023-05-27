@@ -5,7 +5,7 @@
     clean = git-lfs clean -- %f
 [user]
     name = Abraxas
-    email = abr4xa5@protonmail.ch
+    email = abr4xa5@proton.me
 [fetch]
     prune = true
 [alias]
