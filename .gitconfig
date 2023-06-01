@@ -6,6 +6,7 @@
 [user]
     name = Abraxas
     email = abr4xa5@proton.me
+	signingkey = 7E7C2050A8A9875F
 [fetch]
     prune = true
 [alias]
@@ -77,3 +78,5 @@
 # Local file for github tokens/ secrets / etc
 [include]
     path = ~/cfg/gitconfig.local
+[commit]
+	gpgsign = true

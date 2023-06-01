@@ -36,6 +36,11 @@ export PATH="$PATH:$HOME/.local/bin"
 export PYENV_ROOT="$HOME/.pyenv"
 command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 
+# Export TTY for signing git commits
+# --no-tty also works
+GPG_TTY=$(tty)
+export GPG_TTY
+
 # TODO: Add conditonals here
 # Dark solorized
 # fzf_colors="pointer:#ebdbb2,bg+:#3c3836,fg:#ebdbb2,fg+:#fbf1c7,hl:#8ec07c,info:#928374,header:#fb4934"
