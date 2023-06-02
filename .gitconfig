@@ -80,3 +80,5 @@
     path = ~/cfg/gitconfig.local
 [commit]
 	gpgsign = true
+[tag]
+	gpgSign = true
