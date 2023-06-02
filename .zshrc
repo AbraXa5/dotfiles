@@ -1,3 +1,11 @@
+# Export TTY for signing git commits
+# Needs to be at the top since for P10k instant promptstdin is redirected from /dev/null
+# GPG_TTY=$(tty)
+# export GPG_TTY
+
+# Better option since this works even if stdin is redirected
+export GPG_TTY=$TTY
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -49,6 +57,8 @@ source_if_exists "$HOME/.cargo/env"
 if command -v pyenv >/dev/null; then
   eval "$(pyenv init -)"
 fi
+
+
 
 # Source any local configs/ Tokens
 source_if_exists "$HOME/cfg/extras.local"
