@@ -19,8 +19,13 @@ export NODE_REPL_MODE='sloppy'
 # Make Python use UTF-8 encoding for output to stdin, stdout, and stderr.
 export PYTHONIOENCODING='UTF-8'
 
-# Highlight section titles in manual pages.
-export LESS_TERMCAP_md="${yellow}"
+# Highlight section titles in manual pages as cyan
+export LESS_TERMCAP_md="$(
+    tput bold
+    tput setaf 6
+)"
+export LESS_TERMCAP_mb=$'\e[1;31m' # Bold
+export LESS_TERMCAP_ue=$'\e[0m'    # Underline
 
 # Don’t clear the screen after quitting a manual page.
 export MANPAGER='less -X'
