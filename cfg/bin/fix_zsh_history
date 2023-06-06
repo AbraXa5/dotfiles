@@ -1,0 +1,15 @@
+#!/usr/bin/env sh
+
+set -eEu -o pipefail
+
+echo "Fixing corrupted ZSH history file"
+
+mv ~/.zsh_history ~/.zsh_history_corrupted
+# Recover non corrupted history
+strings ~/.zsh_history_corrupted >~/.zsh_history
+# Read non corrupted history
+fc -R ~/.zsh_history
+
+rm ~/.zsh_history_corrupted
+
+echo "ZSH history fixed"
