@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 
 import re
-import requests
 import sys
 
+import requests
 import urllib3
 
 # Source: https://urllib3.readthedocs.io/en/1.26.x/advanced-usage.html#ssl-warnings
