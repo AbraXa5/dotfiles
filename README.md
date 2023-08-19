@@ -22,7 +22,7 @@ curl https://raw.githubusercontent.com/AbraXa5/dotfiles/main/cfg/setupDotfiles.s
 
 Clone the bare repository
 ```bash
-git clone --bare git@github.com:AbraXa5/dotfiles $HOME/.dotfiles.git
+git clone --bare git@dotfiles.github.com:AbraXa5/dotfiles $HOME/.dotfiles.git
 ```
 
 Setup an alias to use the bare repository
@@ -30,7 +30,7 @@ Setup an alias to use the bare repository
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles.git/ --work-tree=$HOME'
 ```
 
-Backup Existing dotfiles as a precaution and checkout this repository
+Backup conflicting dotfiles as a precaution and checkout this repository
 ```bash
 dotfiles checkout
 ```
@@ -60,8 +60,8 @@ xclip \
 nnn \
 peco \
 jq \
-python-pip \
-python-venv \
+python3-pip \
+python3-venv \
 unzip \
 nmap \
 ffuf \
@@ -73,9 +73,9 @@ cowsay \
 go
 ```
 
-
+Install docker and docker compose
 ```bash
-yay -S docker
+yay -S docker.io docker-compose docker-clean
 sudo usermod -aG docker $USER
 newgrp docker
 sudo systemctl enable docker --now
