@@ -2,6 +2,8 @@
 
 ## Install
 
+Generate and add a ssh key for the repo (here named dotfiles ) 
+
 Add a ssh config entry for `dotfiles.github.com`
 ```bash
 Host dotfiles.github.com
@@ -42,7 +44,12 @@ dotfiles config status.showUntrackedFiles no
 
 ## Post Install 
 
-Antigen will handle all zsh requirements 
+Antigen will handle all zsh requirements and plugins
+
+Update antigen
+```bash
+curl -L git.io/antigen > antigen.zsh
+```
 
 Install fzf
 ```bash
@@ -80,3 +87,32 @@ sudo usermod -aG docker $USER
 newgrp docker
 sudo systemctl enable docker --now
 ```
+
+**VSCode** 
+- Sync settings from github
+- settings.json and keybinding in the ansible repo if required 
+
+**SublimeText**
+- Install package control
+- Install package sync using package control
+- Wait for extension to install and restart subl
+
+Post setup, set [wakatime](https://wakatime.com/dashboard) API key via the extension to track time spent on editors
+
+## Managing dotfiles
+
+Open a new terminal or source the rc file and run `dot` to get an overview of all added dotfiles. (`M` means the file is modified but not staged)
+```bash
+> dot
+ M   /.bashrc                                                 Fix bashrc fzf import
+     /.config/bat/config                                      Change bat theme
+     /.config/nano/nanorc                                     Add nano rc file
+...
+...
+```
+
+`dot` supports all git operations, for example, 
+- `dot add` to stage a file
+- `dot commit -m ''` to commit the files
+- `dot push` to push to remote
+- `dot lg` to view log and so on
