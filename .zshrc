@@ -54,11 +54,9 @@ fi
 source_if_exists "$HOME/.cargo/env"
 
 # Activate pyenv
-if command -v pyenv >/dev/null; then
-  eval "$(pyenv init -)"
-fi
-
-
+# if command -v pyenv >/dev/null; then
+#   eval "$(pyenv init -)"
+# fi
 
 # Source any local configs/ Tokens
 source_if_exists "$HOME/cfg/extras.local"
