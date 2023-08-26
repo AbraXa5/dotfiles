@@ -38,6 +38,7 @@
     cfg = config --global -e
     filehistory = log -p --follow
     git = !exec git
+	lg2 = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --branches
 
 # for fancy git graph
 [log]
