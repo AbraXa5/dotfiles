@@ -29,5 +29,6 @@
 		"SublimeLinter-shellcheck",
 		"SublimeLinter-tslint",
 		"Theme - Spacegray",
+		"WakaTime",
 	],
 }
