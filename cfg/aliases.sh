@@ -164,6 +164,9 @@ alias msfvenomhere='docker run --rm -it -v "${HOME}/.msf4:/home/msf/.msf4" -v "$
 ## review, doexn't work anymore
 alias runhetty='docker run -v $HOME/.hetty:/root/.hetty -p 8080:8080 ghcr.io/dstotijn/hetty:latest'
 
+## docker rustcan
+alias rustscan='docker run -it --rm --name rustscan rustscan/rustscan:latest'
+
 ## print all docker aliases
 # docker_alias() {
 #     echo "dockershell <containerimage> - Start /bin/bash"

@@ -164,7 +164,7 @@ john_rock() {
 # optimized rustscan with nmap script and version scanning
 function rscan() {
     domain="$1" && shift
-    rustscan -a "$domain" --ulimit 5000 -n -- -sCV -v "$@"
+    rustscan -a "$domain" -n -- -Pn -sCV -v "$@"
 }
 
 # SSH aliases
@@ -235,4 +235,21 @@ function xnLinkFinder() {
     cd - || exit 1
     mv "$OLDPWD/output.txt" ./xnLinkFinder_output.txt
     mv "$OLDPWD/parameters.txt" ./xnLinkFinder_parameters.txt
+}
+
+
+function nmap_open_ports() {
+    open_ports=$(nmap -p- -Pn -T4 --min-rate 1000 --max-retries 5 -oA "nmap/fullScan_$1" "$1" | grep -E 'open|filtered' | grep -v 'no-response' | awk -F/ '{print $1}' | paste -sd "," - );echo $open_ports
+}
+
+function nmap_scv() {
+    if [ -z "$open_ports" ]; then
+        echo "Run nmap_open_ports first"
+        return 1
+    fi
+    if [ -z "$1" ]; then
+        echo "IP missing"
+        return 1
+    fi
+    nmap -p"$open_ports" -sV -sC -T4 -Pn -oA "nmap/$1" "$1"
 }
