@@ -45,6 +45,9 @@ export PATH="$PATH:$HOME/.local/bin"
 export FLYCTL_INSTALL="$HOME/.fly"
 export PATH="$FLYCTL_INSTALL/bin:$PATH"
 
+# Deta.space
+export PATH="/home/abraxas/.detaspace/bin:$PATH"
+
 # TODO: Add conditonals here
 # Dark solorized
 # fzf_colors="pointer:#ebdbb2,bg+:#3c3836,fg:#ebdbb2,fg+:#fbf1c7,hl:#8ec07c,info:#928374,header:#fb4934"
