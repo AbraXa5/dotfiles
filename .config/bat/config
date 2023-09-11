@@ -1,4 +1,10 @@
---theme=Dracula
+# Download themes to .config/bat/themes/
+# https://raw.githubusercontent.com/catppuccin/bat/main/Catppuccin-mocha.tmTheme
+# https://raw.githubusercontent.com/catppuccin/bat/main/Catppuccin-macchiato.tmTheme
+# 
+# build uisng, bat cache --build
+# verify using, bat --list-themes
+--theme=Catpppuccin-machiato
 --style=full
 --italic-text=always
 --color=always
