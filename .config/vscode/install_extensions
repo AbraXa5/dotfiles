@@ -1,0 +1,21 @@
+#! /usr/bin/env bash
+
+echo "Installing extensions for VS Code"
+
+extensions_file="extensions"
+
+# Check extensions_file
+if [ ! -f "$extensions_file" ]; then
+    echo "Error: '$extensions_file' not found."
+    exit 1
+fi
+
+# Read each extension and install it
+while read -r extension; do
+    if [ -n "$extension" ]; then
+        echo "Installing: $extension"
+        code --install-extension "$extension"
+    fi
+done < "$extensions_file"
+
+echo "Finished installing extensions"
