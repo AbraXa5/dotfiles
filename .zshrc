@@ -9,9 +9,9 @@ export GPG_TTY=$TTY
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
+# if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+#   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+# fi
 
 # Load Antigen
 source "$HOME/antigen.zsh"
@@ -21,7 +21,7 @@ antigen init ~/cfg/antigenrc
 
 # function to source if the file exists and is readable
 source_if_exists() {
-    [[ -r "$1" ]] && source "$1";
+    [[ -r "$1" ]] && source "$1"
 }
 
 # Load Aliases
@@ -39,6 +39,9 @@ source_if_exists "$HOME/cfg/fzf.zsh"
 
 # Load Exports
 source_if_exists "$HOME/cfg/exports.sh"
+
+# Load Dracula ZSH variables
+source_if_exists "$HOME/cfg/dracula.sh"
 
 # Load nvm
 # [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # Why was the dot escaped
