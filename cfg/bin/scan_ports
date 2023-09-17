@@ -19,19 +19,26 @@ if [ "$EUID" -ne 0 ]; then
     exit $?
 fi
 
-# Check if a verbose option is provided as the second argument
-if [ "$#" -ge 2 ] && [ "$2" == "verbose" ]; then
-    verbose=true
-    shift
-fi
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        -v|--verbose)
+            verbose=true
+            shift
+            ;;
+        *)
+            IP="$1"
+            shift
+            ;;
+    esac
+done
 
-# Check if an IP address is provided as the first argument
-if [ $# -ne 1 ]; then
-    echo -e "${RED}Usage: $0 [verbose] <IP>${RESET}"
+
+# Check if an IP address is provided
+if [ -z "$IP" ]; then
+    echo -e "${RED}Usage: $0 <IP> [-v|--verbose]${RESET}"
     exit 1
 fi
 
-IP="$1"
 
 if [ ! -d "nmap" ]; then
     mkdir "nmap"
@@ -66,7 +73,7 @@ tcp_full_scan() {
 
 # Function to perform a UDP scan
 udp_scan() {
-    echo -e "${GREEN}[+] Scanning UDP scan for top 30 ports${RESET}\n"
+    echo -e "\n\n${GREEN}[+] Starting UDP scan for top 30 ports${RESET}\n"
     nmap_verbose_option=""
     if [ "$verbose" == true ]; then
         nmap_verbose_option="-v"
@@ -79,13 +86,14 @@ udp_scan() {
     if [ -n "$open_udp_ports" ]; then
         echo -e "${YELLOW}[*] Open UDP ports: ${open_udp_ports}${RESET}\n"
         echo -e "${GREEN}[+] Starting script and service scan for open UDP ports${RESET}\n"
-        print_and_execute_command "nmap $nmap_verbose_option -Pn -sU -pU:\"$open_udp_ports\" -sV -sC -T4 -oA \"nmap/udp_$IP\" \"$IP\""
+        print_and_execute_command "nmap $nmap_verbose_option -Pn -sU -pU:\"$open_udp_ports\" -sV -sC -T4 -oA \"nmap/udp_$IP\" \"$IP\" --open"
     else
         echo -e "\n${RED}[X] No open UDP ports found.${RESET}\n"
     fi
 }
 
 # Call the functions to perform the scans
+# Added an echo to fix the eval issue from previous command 
 tcp_full_scan
 echo ""
 udp_scan

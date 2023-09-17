@@ -1,5 +1,5 @@
 # Export TTY for signing git commits
-# Needs to be at the top since for P10k instant promptstdin is redirected from /dev/null
+# Needs to be at the top since for P11k instant promptstdin is redirected from /dev/null
 # GPG_TTY=$(tty)
 # export GPG_TTY
 
@@ -40,7 +40,7 @@ source_if_exists "$HOME/cfg/fzf.zsh"
 # Load Exports
 source_if_exists "$HOME/cfg/exports.sh"
 
-# Load Dracula ZSH variables
+# Load ZSH Dracula theme variables
 source_if_exists "$HOME/cfg/dracula.sh"
 
 # Load nvm
@@ -51,6 +51,7 @@ source_if_exists "$NVM_DIR/nvm.sh"
 # Source NVM zsh integration
 if [[ -d "$NVM_DIR" && -f ~/cfg/nvmrc ]]; then
     . ~/cfg/nvmrc
+    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 fi
 
 # Source cargo
@@ -60,6 +61,11 @@ source_if_exists "$HOME/.cargo/env"
 # if command -v pyenv >/dev/null; then
 #   eval "$(pyenv init -)"
 # fi
+
+# Load rbenv shell integration
+if [[ -d "$HOME/.rbenv" && -f ~/cfg/rbenvrc ]]; then
+	. ~/cfg/rbenvrc
+fi
 
 # Source any local configs/ Tokens
 source_if_exists "$HOME/cfg/extras.local"
