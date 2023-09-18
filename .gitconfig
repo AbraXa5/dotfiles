@@ -39,6 +39,7 @@
     filehistory = log -p --follow
     git = !exec git
 	lg2 = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --branches
+    this = !git init && git add . && git commit -m 'Initial commit'
 
 # for fancy git graph
 [log]
@@ -56,18 +57,15 @@
 [checkout]
     defaultRemote = origin
 
+# Git to SSH
 [url "git@github.com:"]
     insteadOf = "gh:"
     pushInsteadOf = "github:"
     pushInsteadOf = "git://github.com/"
-[url "git://github.com/"]
-    insteadOf = "github:"
 [url "git@gist.github.com:"]
     insteadOf = "gst:"
     pushInsteadOf = "gist:"
     pushInsteadOf = "git://gist.github.com/"
-[url "git://gist.github.com/"]
-    insteadOf = "gist:"
 
 [init]
     defaultBranch = main
