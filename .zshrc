@@ -40,8 +40,11 @@ source_if_exists "$HOME/cfg/fzf.zsh"
 # Load Exports
 source_if_exists "$HOME/cfg/exports.sh"
 
-# Load ZSH Dracula theme variables
-source_if_exists "$HOME/cfg/dracula.sh"
+# # Load ZSH Dracula theme variables
+# source_if_exists "$HOME/cfg/dracula.sh"
+
+# ZSH Spaceship prompt config file
+export SPACESHIP_CONFIG="$HOME/cfg/spaceshiprc.zsh"
 
 # Load nvm
 # [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # Why was the dot escaped
