@@ -98,5 +98,9 @@ export FZF_CTRL_T_OPTS="
   --preview 'bat -n --color=always {}'
   --bind 'ctrl-/:change-preview-window(down|hidden|)'"
 
+if [[ "$(uname -n)" = "kali" ]]; then
+    export FZF_CTRL_T_OPTS="--preview 'batcat -n --color=always {}' --bind 'ctrl-/:change-preview-window(down|hidden|)'"
+fi
+
 # Export path to my custom scripts
 export PATH=~/cfg/bin:${PATH}
