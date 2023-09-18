@@ -80,6 +80,11 @@ cowsay \
 go
 ```
 
+Build Catppuccin theme for bat
+```bash
+bat cache --build
+```
+
 Install docker and docker compose
 ```bash
 yay -S docker.io docker-compose docker-clean
