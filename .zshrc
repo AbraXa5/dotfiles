@@ -13,6 +13,10 @@ export GPG_TTY=$TTY
 #   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 # fi
 
+# Load sapceship customizations before the theme
+# Not recommended, but customizations would only work on $(eval zsh)
+source "$HOME/cfg/spaceshiprc.zsh"
+
 # Load Antigen
 source "$HOME/antigen.zsh"
 
@@ -32,7 +36,7 @@ source_if_exists "$HOME/cfg/functions.sh"
 
 # To customize prompt, run `p10k configure` or edit ~/cfg/.p10k.zsh.
 # Load P10K
-source_if_exists "$HOME/cfg/.p10k.zsh"
+# source_if_exists "$HOME/cfg/.p10k.zsh"
 
 # Load Fzf
 source_if_exists "$HOME/cfg/fzf.zsh"
