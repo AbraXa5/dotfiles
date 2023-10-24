@@ -75,7 +75,7 @@ command_timeout = 5000
     read_only         = " 󰌾"
     home_symbol       = " ~"
     use_os_path_sep   = false
-    style             = "bold italic blue"
+    # style             = "bold italic blue"
 
     [directory.substitutions]
         "Documents" = " "
@@ -83,7 +83,7 @@ command_timeout = 5000
         "Music"     = " "
         "Pictures"  = " "
         "Projetcs"  = "💻 "
-        "HTB"       = "⬢"
+        "HTB"       = "⬢ "
         "THM"       = "🍄 "
         "CTFs"      = "👾 "
         # 🤖
