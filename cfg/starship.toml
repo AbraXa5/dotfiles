@@ -101,6 +101,7 @@ command_timeout = 5000
         Raspbian    = " "
         Ubuntu      = " "
         Windows     = "󰍲 "
+        Linux     = "🐉 "
 
 [memory_usage]
     format    = "$symbol[${ram}( | ${swap})]($style) "
@@ -121,7 +122,7 @@ command_timeout = 5000
 
 [git_commit]
     commit_hash_length = 5
-    style              = "bold white"
+    style              = "bold dimmed white"
     only_detached      = false
 
 [git_state]
