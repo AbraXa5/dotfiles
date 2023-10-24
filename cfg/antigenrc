@@ -21,7 +21,7 @@ antigen bundle agkozak/zsh-z
 #antigen theme robbyrussell
 #antigen theme romkatv/powerlevel10k
 #antigen theme dracula/zsh dracula
-antigen theme spaceship-prompt/spaceship-prompt
+# antigen theme spaceship-prompt/spaceship-prompt
 
 # Commit Antigen Configuration
 antigen apply

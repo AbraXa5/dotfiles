@@ -15,7 +15,7 @@ export GPG_TTY=$TTY
 
 # Load sapceship customizations before the theme
 # Not recommended, but customizations would only work on $(eval zsh)
-source "$HOME/cfg/spaceshiprc.zsh"
+# source "$HOME/cfg/spaceshiprc.zsh"
 
 # Load Antigen
 source "$HOME/antigen.zsh"
@@ -93,3 +93,6 @@ dot() {
         /usr/bin/git --git-dir=$HOME/.dotfiles.git/ --work-tree=$HOME "$@"
     fi
 }
+
+export STARSHIP_CONFIG="$HOME/cfg/starship.toml"
+eval "$(starship init zsh)"
