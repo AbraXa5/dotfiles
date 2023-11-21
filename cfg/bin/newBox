@@ -1,0 +1,86 @@
+#!/usr/bin/env bash
+
+GREEN='\033[0;32m'
+RED='\033[0;31m'
+BLUE='\033[0;34m'
+CYAN='\033[0;36m'
+YELLOW="\e[33m"
+NC='\033[0m'
+
+print_message() {
+    echo -e "$1$2${NC}"
+}
+
+print_info() {
+    print_message "\n${BLUE}[i] " "$1"
+}
+
+print_success() {
+    print_message "\n${GREEN}[+] " "$1"
+}
+
+print_error() {
+    print_message "${RED}[X] " "Error: $1"
+    exit 1
+}
+
+check_command() {
+    command_name=$1
+    if ! command -v "$command_name" &>/dev/null; then
+        print_error "$command_name command not found."
+    fi
+}
+
+create_directories() {
+    local directory="$1"
+    shift
+    for dir in "$@"; do
+        mkdir -p "$directory/$dir"
+    done
+}
+
+newNote () {
+    cp ~/cfg/templates/notes_template.md ./notes.md
+    subl notes.md
+}
+
+base_directory="$HOME/HTB"
+scan_ports_script="$HOME/cfg/bin/scan_ports"
+
+read -rp "$(echo -e ${YELLOW}[*] Enter the name of the box: ${NC})" box_name
+[ -z "$box_name" ] && print_error "Box name cannot be empty."
+
+read -rp "$(echo -e ${YELLOW}[*] Enter the IP address of the box: ${NC})" box_ip
+[ -z "$box_ip" ] && print_error "IP address cannot be empty."
+
+
+box_directory="$base_directory/$box_name"
+[ -e "$box_directory" ] && print_error "'$box_directory' already exists."
+mkdir -p "$box_directory"
+
+# Create directory structure
+create_directories "$box_directory" "dir-enum" "exploit" "loot" "files"
+
+# Check if aliases are loaded
+check_command "newNote"
+# check_command "scan_ports"
+
+[ "$(type -t newNote)" != "function" ] && print_error "newNote function not found."
+[ ! -x "$scan_ports_script" ] && print_error "scan_ports script not found or not executable."
+
+cd "$box_directory" || print_error "Failed to change directory to $box_directory. Exiting..."
+
+# Open notes.md in sublime
+newNote && print_info "Created notes.md from template"
+
+# Run comprehensive nmap scan
+print_info "Starting a nmap scan for ${CYAN}'$box_ip'${NC}"
+echo ""
+$scan_ports_script "$box_ip"
+
+echo ""
+# Display success message
+print_success "Box setup done!"
+
+# Get a shell in the new box directory 
+$SHELL
