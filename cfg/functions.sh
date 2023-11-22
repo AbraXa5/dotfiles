@@ -3,6 +3,7 @@
 gpip() {
     PIP_REQUIRE_VIRTUALENV=false pip "$@"
 }
+
 function killp_named() {
     processName="$1"
     ps aux | grep "$processName" | grep -v grep | grep -v kill_named | awk '{print $2}' | xargs kill -9
@@ -38,6 +39,11 @@ function cl() {
 mkcd() {
     mkdir -p -- "$1" &&
         cd -- "$1" || exit 1
+}
+
+show_tun0 () {
+    tun0_ip=$(ip -br a | grep tun0 | awk '{ print $3 }' | cut -d '/' -f1)
+    echo "$tun0_ip"
 }
 
 list_ips() {
@@ -237,11 +243,12 @@ function xnLinkFinder() {
     mv "$OLDPWD/parameters.txt" ./xnLinkFinder_parameters.txt
 }
 
-
+# Get open ports from nmap into $open_ports
 function nmap_open_ports() {
     open_ports=$(nmap -p- -Pn -T4 --min-rate 1000 --max-retries 5 -oA "nmap/fullScan_$1" "$1" | grep -E 'open|filtered' | grep -v 'no-response' | awk -F/ '{print $1}' | paste -sd "," - );echo $open_ports
 }
 
+# Run a service and script scan on $open_ports
 function nmap_scv() {
     if [ -z "$open_ports" ]; then
         echo "Run nmap_open_ports first"
@@ -252,4 +259,11 @@ function nmap_scv() {
         return 1
     fi
     nmap -p"$open_ports" -sV -sC -T4 -Pn -oA "nmap/$1" "$1"
+}
+
+# Start a meterpreter listener on tun0
+function msf_shell() {
+    # tun0_ip=$(ip -br a | grep tun0 | awk '{ print $3 }' | cut -d '/' -f1)
+    # msfconsole -x "use exploit/multi/handler;set payload windows/x64/meterpreter/reverse_tcp;set LHOST $tun0_ip;set LPORT 4444;run"
+    msfconsole -q -x 'use exploit/multi/handler;set payload windows/x64/meterpreter/reverse_tcp;set LHOST tun0;set LPORT 4444;run'
 }
