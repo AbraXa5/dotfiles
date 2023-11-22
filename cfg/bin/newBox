@@ -78,7 +78,6 @@ print_info "Starting a nmap scan for ${CYAN}'$box_ip'${NC}"
 echo ""
 $scan_ports_script "$box_ip"
 
-echo ""
 # Display success message
 print_success "Box setup done!"
 
