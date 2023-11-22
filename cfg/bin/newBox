@@ -5,10 +5,10 @@ RED='\033[0;31m'
 BLUE='\033[0;34m'
 CYAN='\033[0;36m'
 YELLOW="\e[33m"
-NC='\033[0m'
+RESET='\033[0m'
 
 print_message() {
-    echo -e "$1$2${NC}"
+    echo -e "$1$2${RESET}"
 }
 
 print_info() {
@@ -47,10 +47,10 @@ newNote () {
 base_directory="$HOME/HTB"
 scan_ports_script="$HOME/cfg/bin/scan_ports"
 
-read -rp "$(echo -e ${YELLOW}[*] Enter the name of the box: ${NC})" box_name
+read -rp "$(echo -e ${YELLOW}[*] Enter the name of the box: ${RESET})" box_name
 [ -z "$box_name" ] && print_error "Box name cannot be empty."
 
-read -rp "$(echo -e ${YELLOW}[*] Enter the IP address of the box: ${NC})" box_ip
+read -rp "$(echo -e ${YELLOW}[*] Enter the IP address of the box: ${RESET})" box_ip
 [ -z "$box_ip" ] && print_error "IP address cannot be empty."
 
 
@@ -74,7 +74,7 @@ cd "$box_directory" || print_error "Failed to change directory to $box_directory
 newNote && print_info "Created notes.md from template"
 
 # Run comprehensive nmap scan
-print_info "Starting a nmap scan for ${CYAN}'$box_ip'${NC}"
+print_info "Starting a nmap scan for ${CYAN}'$box_ip'${RESET}"
 echo ""
 $scan_ports_script "$box_ip"
 

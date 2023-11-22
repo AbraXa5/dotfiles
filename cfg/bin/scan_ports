@@ -67,7 +67,7 @@ tcp_full_scan() {
         echo -e "${GREEN}[+] Starting script and service scan for open TCP ports${RESET}\n"
         print_and_execute_command "nmap $nmap_verbose_option -Pn -p\"$open_tcp_ports\" -sV -sC -T4 -oA \"nmap/$IP\" \"$IP\""
     else
-        echo -e "\n$[X] {RED}No open TCP ports found.${RESET}\n"
+        echo -e "\n${RED}[X] No open TCP ports found.${RESET}\n"
     fi
 }
 
