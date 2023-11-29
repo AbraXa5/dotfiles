@@ -99,6 +99,6 @@ echo ""
 udp_scan
 
 if [ -n "$SUDO_USER" ]; then
-    echo -e "\n${GREEN}[+] Changing ownership of nmap dir to $SUDO_USER\n${RESET}"
+    echo -e "\n${GREEN}[+] Changing ownership of nmap dir to $SUDO_USER ${RESET}\n"
     sudo chown -R "$SUDO_USER:$SUDO_USER" "nmap"
 fi
