@@ -54,9 +54,18 @@ read -rp "$(echo -e ${YELLOW}[*] Enter the IP address of the box: ${RESET})" box
 [ -z "$box_ip" ] && print_error "IP address cannot be empty."
 
 
+if [ -n "$1" ]; then
+    case "$1" in
+        [Tt][Hh][Mm]) base_directory="$HOME/THM" ;;
+        *) print_error "Invalid positional parameter. Use 'THM' or 'HTB'." ;;
+    esac
+fi
+
 box_directory="$base_directory/$box_name"
 [ -e "$box_directory" ] && print_error "'$box_directory' already exists."
 mkdir -p "$box_directory"
+
+print_info "Working directory: ${box_directory}"
 
 # Create directory structure
 create_directories "$box_directory" "dir-enum" "exploit" "loot" "files"
@@ -73,11 +82,15 @@ cd "$box_directory" || print_error "Failed to change directory to $box_directory
 # Open notes.md in sublime
 newNote && print_info "Created notes.md from template"
 
+# Create a credentials file
+touch creds.txt && subl creds.txt
+
 # Run comprehensive nmap scan
 print_info "Starting a nmap scan for ${CYAN}'$box_ip'${RESET}"
 echo ""
 $scan_ports_script "$box_ip"
 
+#
 # Display success message
 print_success "Box setup done!"
 
