@@ -1,5 +1,5 @@
 {
-	"font_size": 9,
+	"font_size": 10,
 
 	"tab_size": 4,
     "translate_tabs_to_spaces": true,
@@ -74,4 +74,5 @@
 	/*"material_theme_contrast_mode": true,*/
 	"material_theme_contrast_mode": true,
 	"material_theme_small_tab": true,
+	"index_files": true,
 }
