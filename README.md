@@ -104,6 +104,17 @@ sudo systemctl enable docker --now
 
 Post setup, set [wakatime](https://wakatime.com/dashboard) API key via the extension to track time spent on editors
 
+**Starship**
+Switched the shell prompt to startship
+```bash
+# cmake should be installed for this 
+cargo install starship --locked
+```
+
+```bash
+curl -sS https://starship.rs/install.sh | sh
+```
+
 ## Managing dotfiles
 
 Open a new terminal or source the rc file and run `dot` to get an overview of all added dotfiles. (`M` means the file is modified but not staged)
