@@ -115,6 +115,10 @@ cargo install starship --locked
 curl -sS https://starship.rs/install.sh | sh
 ```
 
+**Terminator**
+
+Catppuccin theme already in the config files, execute with `terminator -p Catppuccin_Mocha`
+
 ## Managing dotfiles
 
 Open a new terminal or source the rc file and run `dot` to get an overview of all added dotfiles. (`M` means the file is modified but not staged)
