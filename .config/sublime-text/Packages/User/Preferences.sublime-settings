@@ -74,5 +74,5 @@
 	/*"material_theme_contrast_mode": true,*/
 	"material_theme_contrast_mode": true,
 	"material_theme_small_tab": true,
-	"index_files": true,
+	"index_files": false,
 }
