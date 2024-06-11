@@ -231,7 +231,7 @@ function chisel_server_start() {
     echo ''
     echo 'This will create a tunnel to `TARGET_IP:TARGET_PORT` accessible through `127.0.0.1:LOCAL_PORT`'
     echo ''
-    /home/$USER/Tools/chisel/chisel_1.7.6_linux_amd64 server --reverse --port "${1}"
+    /home/$USER/Tools/chisel/chisel_linux_amd64 server --reverse --port "${1}"
 }
 
 # TODO Improve this
