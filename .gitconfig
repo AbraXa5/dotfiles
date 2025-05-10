@@ -78,6 +78,6 @@
 [include]
     path = ~/cfg/gitconfig.local
 [commit]
-	gpgsign = true
+	gpgsign = false
 [tag]
 	gpgSign = true
