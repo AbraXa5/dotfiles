@@ -11,7 +11,7 @@ function killp_named() {
 
 function src() {
     source $HOME/.zshrc
-    cowsay "$(fortune)" | toilet -f term --metal && sleep 5 && clear
+    cowsay -t "$(fortune)" | toilet -f term --metal && sleep 5 && clear
     eval zsh
 }
 
@@ -220,6 +220,10 @@ smbservehere() {
     local sharename
     [[ -z $1 ]] && sharename="SHARE" || sharename=$1
     docker run --rm -it -p 445:445 -v "${PWD}:/tmp/serve" rflathers/impacket smbserver.py -smb2support "$sharename" /tmp/serve
+}
+
+evil-winrm() {
+    docker run --rm -ti oscarakaelvis/evil-winrm "$@"
 }
 
 # chisel

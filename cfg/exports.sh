@@ -40,6 +40,8 @@ export PATH="$PATH:$HOME/.local/bin"
 # Pyenv shell config
 # export PYENV_ROOT="$HOME/.pyenv"
 # command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
 
 # Fly.io
 export FLYCTL_INSTALL="$HOME/.fly"
