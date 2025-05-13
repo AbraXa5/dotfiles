@@ -1,0 +1,57 @@
+# ruff.toml
+
+# Use Ruff’s formatter (Black-compatible)
+line-length = 88
+# target-version = "py310"
+
+extend-exclude = ["static"]
+
+# Enable Ruff's formatter (equivalent to Black)
+[format]
+    quote-style  = "double"
+    indent-style = "space"
+    line-ending  = "auto"
+
+# Enable linting rules
+[lint]
+    select = [
+        "B",   # flake8-bugbear
+        "C4",  # flake8-comprehensions
+        "DTZ", # flake8-datetimez
+        "E",   # pycodestyle errors
+        "F",   # pyflakes
+        "I",   # isort
+        "INT", # flake8-gettext
+        "PIE", # flake8-pie
+        "PLC", # pylint convention
+        "PLE", # pylint errors
+        "PTH", # flake8-use-pathlib
+        "Q",   # flake8-quotes
+        "RSE", # flake8-raise
+        "RUF", # ruff-specific rules
+        "S",   # flake8-bandit
+        "UP",  # pyupgrade
+        "W",   # pycodestyle warnings
+        "T10", # flake8-debugger
+        "EM",  # flake8-errmsg
+        "RET", # flake8-return
+        # "PT",  # flake8-pytest-style (optional)
+    ]
+    ignore = [
+        "RUF001", # ambiguous-unicode-character-string
+        "S101",   # assert
+        "S308",   # suspicious-mark-safe-usage
+        "E501",   # line-too-long
+        "B904",   # raise-without-from-inside-except
+        "B008",   # function-call-in-default-argument
+        "PTH123", # open() should be replaced by Path.open()
+    ]
+    unfixable = [
+        "ERA", # do not autoremove commented-out code
+        "B",   # all bugbear rules
+    ]
+
+    # Import sorting (isort-like behavior)
+    [lint.isort]
+        force-single-line   = true
+        lines-after-imports = 2
