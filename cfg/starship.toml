@@ -101,7 +101,7 @@ command_timeout = 5000
         Raspbian    = " "
         Ubuntu      = " "
         Windows     = "󰍲 "
-        Linux     = "🐉 "
+        # Linux     = "🐉 "
 
 [memory_usage]
     format    = "$symbol[${ram}( | ${swap})]($style) "
