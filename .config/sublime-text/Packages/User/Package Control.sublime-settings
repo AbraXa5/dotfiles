@@ -33,6 +33,7 @@
 		"SublimeLinter-shellcheck",
 		"SublimeLinter-tslint",
 		"Theme - Spacegray",
+		"TOML",
 		"WakaTime",
 	],
 }
