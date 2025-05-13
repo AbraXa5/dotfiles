@@ -1,0 +1,165 @@
+#!/usr/bin/env python3
+
+import argparse
+import base64
+import json
+import logging
+import sys
+import urllib.parse
+import zoneinfo
+from datetime import datetime
+
+from flask import Flask
+from flask import jsonify
+from flask import request
+
+
+app = Flask(__name__)
+
+# Setup logging
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s",
+    stream=sys.stdout,
+)
+logger = logging.getLogger(__name__)
+
+# Global decoding flags (populated by CLI args)
+DECODE_MODE = {"base64": False, "urlenc": False, "json_response": False}
+
+
+def decode_b64_safe(value):
+    if not isinstance(value, str):
+        return "[!] Invalid type, expected string"
+
+    value = value.strip()
+    padding = len(value) % 4
+    if padding:
+        value += "=" * (4 - padding)
+    try:
+        decoded_bytes = base64.b64decode(value)
+        try:
+            return decoded_bytes.decode("utf-8", errors="strict")
+        except UnicodeDecodeError:
+            return decoded_bytes.hex()
+    except Exception as e:
+        logger.debug(f"Exception during base64 decode: {e!r}")
+        return f"[!] Error decoding base64: {e!s}"
+
+
+def decode_url_safe(value):
+    try:
+        return urllib.parse.unquote_plus(value)
+    except Exception as e:
+        logger.debug(f"Exception during URL decode: {e!r}")
+        return f"[!] Error decoding URL: {e!s}"
+
+
+@app.route("/", methods=["GET", "POST"])
+def handle_request():
+    ip = request.remote_addr or "unknown"
+    method = request.method
+    timestamp = datetime.now(zoneinfo.ZoneInfo("Asia/Kolkata")).isoformat()
+
+    raw_params = request.values.to_dict(flat=False)
+
+    logger.info(f"[+] Request from {ip} via {method} at {timestamp}")
+    logger.info(
+        f"    Server flags: base64={DECODE_MODE['base64']}, urlenc={DECODE_MODE['urlenc']}, json_response={DECODE_MODE['json_response']}"
+    )
+
+    results = {}
+
+    if not raw_params:
+        logger.info("    No parameters received.")
+
+    for key, values in raw_params.items():
+        key_results = []
+        for raw_value in values:
+            raw_value = str(raw_value).strip() if raw_value is not None else ""
+            decoded_value = raw_value
+
+            logger.info(f"    Key       : {key}")
+            logger.info(f"    Raw       : {raw_value}")
+
+            if DECODE_MODE["base64"] and not DECODE_MODE["urlenc"]:
+                decoded_value = decode_b64_safe(raw_value)
+                logger.info(f"    Decoded   : {decoded_value}")
+            elif DECODE_MODE["urlenc"] and not DECODE_MODE["base64"]:
+                decoded_value = decode_url_safe(raw_value)
+                logger.info(f"    Decoded   : {decoded_value}")
+            else:
+                url_decoded = decode_url_safe(raw_value)
+                decoded_value = decode_b64_safe(url_decoded)
+                logger.info(f"    URL Decoded : {url_decoded}")
+                logger.info(f"    B64 Decoded : {decoded_value}")
+
+            key_results.append({"raw": raw_value, "decoded": decoded_value})
+
+            logger.debug(
+                json.dumps(
+                    {
+                        "ip": ip,
+                        "timestamp": timestamp,
+                        "method": method,
+                        "key": key,
+                        "raw_value": raw_value,
+                        "decoded_value": decoded_value,
+                    }
+                )
+            )
+
+        results[key] = key_results
+
+    # Handle raw JSON body or binary POSTs
+    if request.is_json:
+        try:
+            json_data = request.get_json()
+            logger.info(f"    JSON body: {json.dumps(json_data, indent=2)}")
+            results["_json_body"] = json_data
+        except Exception as e:
+            logger.warning(f"    [!] Error parsing JSON body: {e!s}")
+
+    elif request.content_type == "application/octet-stream":
+        try:
+            raw_body = request.get_data()
+            hex_body = raw_body.hex()
+            logger.info(f"    Binary body (hex): {hex_body}")
+            results["_binary_body"] = hex_body
+        except Exception as e:
+            logger.warning(f"    [!] Error reading binary body: {e!s}")
+
+    if DECODE_MODE["json_response"]:
+        return jsonify(results), 200
+
+    return "[+] Received and processed\n", 200
+
+
+if __name__ == "__main__":
+    # Hide Werkzeug default HTTP request log
+    logging.getLogger("werkzeug").setLevel(logging.ERROR)
+
+    parser = argparse.ArgumentParser(description="Flexible decoder server")
+    parser.add_argument(
+        "--port", type=int, default=80, help="Port to listen on (default: 80)"
+    )
+    parser.add_argument("--debug", action="store_true", help="Enable Flask debug mode")
+    parser.add_argument(
+        "--base64", action="store_true", help="Enable base64-only decode mode"
+    )
+    parser.add_argument(
+        "--urlenc", action="store_true", help="Enable urlenc-only decode mode"
+    )
+    parser.add_argument(
+        "--json", action="store_true", help="Enable JSON API response mode"
+    )
+    args = parser.parse_args()
+
+    # Apply global decode flags
+    DECODE_MODE["base64"] = args.base64
+    DECODE_MODE["urlenc"] = args.urlenc
+    DECODE_MODE["json_response"] = args.json
+
+    app.run(
+        host="0.0.0.0", port=args.port, debug=args.debug, use_reloader=False
+    )  # noqa: S104
