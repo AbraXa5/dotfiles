@@ -69,8 +69,8 @@ source_if_exists "$HOME/.cargo/env"
 #   eval "$(pyenv init -)"
 # fi
 if command -v pyenv 1>/dev/null 2>&1; then
-    eval "$(pyenv init --path)"
-    # eval "$(pyenv init - zsh)"
+    # eval "$(pyenv init --path)"
+    eval "$(pyenv init - zsh)"
 fi
 
 # Load rbenv shell integration
