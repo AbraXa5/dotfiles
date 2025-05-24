@@ -115,7 +115,7 @@ for USER in "${USERNAMES[@]}"; do
             # OUTPUT=$(script -q -c "$CMD" /dev/null)
             # echo "$OUTPUT"
             TEMP_OUTPUT=$(mktemp)
-            script -q -c "$CMD" 2>&1 | tee "$TEMP_OUTPUT"
+            script -q /dev/null -c "$CMD" 2>&1 | tee "$TEMP_OUTPUT"
             # "${CMD[@]}" 2>&1 | tee "$TEMP_OUTPUT"
             # echo
 
