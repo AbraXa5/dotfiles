@@ -51,11 +51,12 @@ list_ips() {
 }
 
 function python_server() {
+    local PORT="${1:-80}"
     list_ips
-    echo "http://"$(ip -br a | grep tun0 | tr -s " " | cut -d" " -f3 | cut -d'/' -f1)"/" | xclip -sel clip
+    echo "http://"$(ip -br a | grep tun0 | tr -s " " | cut -d" " -f3 | cut -d'/' -f1)":$PORT/" | xclip -sel clip
     echo -e "[\e[96m$(pwd)\e[0m]\e[34m" && echo -en "\e[0m"
     echo "Files" && ls
-    python3 -m http.server 80
+    python3 -m http.server "$PORT"
 }
 
 # Create a data URL from a file
